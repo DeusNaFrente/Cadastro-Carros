@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml"
+                >
+
+
+    <ui:define name="metadata">
+        <f:metadata>
+
+
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="conteudo">
+
+
+        <h:head>
+            <style>
+
+
+
+
+                fieldset{
+                    width: 1130px;
+                    height: 550px;
+                    border-width: 2px;
+                    border-color: aliceblue;
+                    border-radius: 10px 20px;
+                }
+
+
+
+
+            </style>
+
+
+        </h:head>
+
+
+        <h:body>
+
+
+
+
+            <h:panelGroup id="tudo">
+
+                <fieldset>
+                    <legend>Cadastro de veículos</legend>
+                    <h:form>  
+
+
+
+                        <div style="position: absolute;left: 30px;top: 80px; text-align: left">
+                            <p:inputText value="#{veiculosMB.veiculos.marca}" placeholder="Qual é o fabricante?"  
+                                         style="text-align: left"  size="30" />
+                        </div>
+
+                        <div style="position: absolute;left: 490px;top: 20px; text-align: left" >
+                            <p>Modelo:</p>
+                            <p:inputText value="#{veiculosMB.veiculos.veiculo}" 
+                                         style="text-align: left"  size="20"  />
+                        </div>
+
+
+                        <div style="position: absolute;left: 890px;top: 20px; text-align: left">
+                            <p>Ano:</p>
+                            <p:inputNumber value="#{veiculosMB.veiculos.ano}" style="text-align: left"  size="15" />
+                        </div>
+
+
+                        <div style="position: absolute;left: 30px;top: 120px; text-align: left">
+                            <p>Descrição:</p>
+                            <p:inputText value="#{veiculosMB.veiculos.descricao}"  
+                                         style="text-align: left"  size="15"  />
+                        </div>
+
+
+                        <div style="position: absolute;left: 490px;top: 120px; text-align: left">
+
+                            <p>Data da compra:</p>
+                            <p><p:calendar value="#{veiculosMB.veiculos.dtcompra}" mask="true" 
+                                   size="10" pattern="dd/MM/yyyy" 
+                                   validatorMessage="Data inválida" showOn="button"  /></p>
+                            
+                        </div>
+
+                        
+
+
+                        <div style="position: absolute;left: 890px;top: 120px; text-align: left">
+                            <p>Data da venda:</p>
+                            <p><p:calendar value="#{veiculosMB.veiculos.dtvenda}" mask="true" 
+                                   size="10" pattern="dd/MM/yyyy" 
+                                   validatorMessage="Data inválida" showOn="button"  /></p>
+                            
+                        </div>
+
+
+
+                        <div style="position: absolute;left: 890px;top: 220px; text-align: left">
+                            <p>Situação:</p>
+                            <p:selectOneMenu value="#{veiculosMB.veiculos.situacao}">
+                                <f:selectItem itemLabel="Não definido" itemValue="Não definido" />
+                                <f:selectItem itemLabel="Vendido" itemValue="Vendido" />
+                                <f:selectItem itemLabel="Não vendido" itemValue="Não vendido" />
+                            </p:selectOneMenu>
+                        </div>
+
+
+
+
+                        <br></br><br></br>
+
+
+                        <div style="position: absolute;left: 650px;top: 500px; text-align: left">
+                            <p:commandButton icon="ui-icon-plus" value="Novo Veiculo" actionListener="#{veiculosMB.novo()}" update=":tudo" style="width: 150px;height:30px;background-color: whitesmoke;font-size: 13px;" />
+                            <p:commandButton icon="ui-icon-plus" value="Salvar" actionListener="#{veiculosMB.salvar()}" update=":tudo" style="width: 150px;height:30px;background-color: whitesmoke;font-size: 13px;" />
+                            <p:commandButton icon="ui-icon-trash" value="Excluir" actionListener="#{veiculosMB.excluir()}" update=":tudo" style="width: 150px;height:30px;background-color: whitesmoke;font-size: 13px;"/>
+                        </div>
+
+
+                    </h:form>
+
+
+
+                    <div style="position: absolute;left: 2px;top: 650px; text-align: left">
+
+                        <h:panelGroup >
+
+                            <h:form id="frmEdita" >
+
+
+                                <p:dataTable style="font-size: 14px;" value="#{veiculosMB.listaVeiculos}" 
+                                             var="c" emptyMessage="Sem retorno!" selectionMode="single" selection="#{veiculosMB.veiculos}" rowKey="#{c.id}">
+                                    <p:ajax event="rowSelect" update=":tudo" listener="#{veiculosMB.editar()}" />
+
+
+
+                                    <p:column headerText="Fabricante" filterBy="#{c.marca}" filterMatchMode="startsWith">
+                                        <h:outputText value="#{c.marca}" style="font-size: 12px"/>
+                                    </p:column>
+
+                                    <p:column headerText="Veículo">
+                                        <h:outputText value="#{c.veiculo}" style="font-size: 12px"/>
+                                    </p:column>
+
+                                    <p:column headerText="Descrição" >
+                                        <h:outputText value="#{c.descricao}"  style="font-size: 12px" />
+                                    </p:column>
+
+
+                                    <p:column headerText="Ano" filterBy="#{c.ano}" filterMatchMode="startsWith">
+                                        <h:outputText value="#{c.ano}" style="font-size: 12px"/>
+                                    </p:column>
+
+                                    <p:column headerText="Data da compra" filterBy="#{c.dtcompra}" filterMatchMode="startsWith">
+
+                                        <h:outputText value="#{c.dtcompra}" style="font-size: 12px">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                        
+                                    </p:column>
+
+                                    <p:column headerText="Data da venda" filterBy="#{c.dtvenda}" filterMatchMode="startsWith">
+                                        
+                                        <h:outputText value="#{c.dtvenda}" style="font-size: 12px">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                        
+                                    </p:column>
+
+
+                                    <p:column headerText="Situação" filterBy="#{c.situacao}" filterMatchMode="startsWith">
+                                        <h:outputText value="#{c.situacao}" style="font-size: 12px"/>
+                                    </p:column>
+
+                                </p:dataTable>
+
+
+
+                            </h:form>
+
+                        </h:panelGroup>
+
+                    </div>
+
+
+
+                </fieldset>
+
+            </h:panelGroup>
+
+        </h:body>
+    </ui:define>
+
+</ui:composition>         

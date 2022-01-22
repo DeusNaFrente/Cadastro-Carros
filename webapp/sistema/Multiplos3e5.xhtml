@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml"
+                >
+
+
+
+
+    <ui:define name="metadata">
+        <f:metadata>
+
+
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="conteudo">
+
+
+        <h:head>
+
+            <style>
+                fieldset{
+                    width: 1480px;
+                    height: 580px;
+                    border-width: 2px;
+                    border-color: aliceblue;
+                    border-radius: 10px 20px;
+                }
+            </style>   
+
+
+
+        </h:head> 
+        <h:body>
+
+            <h:panelGroup id="tudo">
+
+
+                <fieldset>
+
+                    <legend>Calculo dos Múltiplos</legend>
+                    <h:form>             
+
+
+                                                  
+                             <p:separator />
+                           
+                             <p>Insira um numero para saber o seu múltiplo:</p>
+                             <p:inputNumber value="#{multiplosMB.multiplos.multiplo}" size="20"/>
+                             
+                                                          
+                             <p>O resultado da soma dos múltiplos deste número é:</p>
+                             <p><p:inputNumber value="#{multiplosMB.multiplos.soma}"  size="20"/></p>
+
+                             <br/>
+                             <p:commandButton icon="ui-icon-plus" value="Calcular" actionListener="#{multiplosMB.calculoMultiplos()}" 
+                                              update=":tudo" style="height:30px;background-color: whitesmoke;font-size: 13px;" />
+                             <p:commandButton icon="ui-icon-plus" value="Novo calculo" actionListener="#{multiplosMB.novoCalculo()}" 
+                                              update=":tudo" style="height:30px;background-color: whitesmoke;font-size: 13px;" />
+                    </h:form>
+                </fieldset>
+
+
+
+            </h:panelGroup>
+        </h:body>
+    </ui:define>
+
+</ui:composition>         

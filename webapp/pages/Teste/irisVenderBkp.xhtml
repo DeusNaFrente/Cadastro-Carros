@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml"
+                >
+
+
+
+
+    <ui:define name="metadata">
+        <f:metadata>
+
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="conteudo">
+
+
+        <h:head>
+
+
+        </h:head> 
+
+
+        <h:body>
+
+
+
+
+            <legend>Cadastro de Vendas</legend>
+
+            <br/>
+
+            <h:form id="tudo">
+
+                
+                
+                <!--Tabela dos produtos-->
+                
+                
+                
+                <p:outputLabel>Tabela de Produtos</p:outputLabel>
+                <p:separator />
+                <p:dataTable   style="font-size: 14px;"  value="#{irisvendasMB.produtos}" var="produto" emptyMessage="Sem retorno!" >
+
+
+                    <p:column headerText="Código do Produto" width="50">
+                        <h:outputText value="#{produto.id}" style="font-size: 12px;"/>
+                    </p:column>
+
+                    <p:column headerText="Produto" width="65">
+                        <h:outputText value="#{produto.descricao}" style="font-size: 12px;"/>
+                    </p:column>
+
+                    <p:column headerText="Preço" width="65">
+                        <h:outputText value="#{produto.preco}" style="font-size: 12px;"/>
+                    </p:column>
+
+                    <p:column headerText="Qtd">
+                        <h:outputText value="#{produto.qtde}" style="font-size: 12px;"/>
+                    </p:column>
+
+                    <p:column headerText="Fornecedor">
+                        <h:outputText value="#{produto.irisfornec.descricao}" style="font-size: 12px;"/>
+                    </p:column>
+
+
+
+
+                    <p:column headerText="Opções">
+
+                        <p:commandButton icon="ui-icon-plus" 
+                                         actionListener="#{irisvendasMB.adicionar(produto)}"
+
+                                         update=":tudo" 
+                                         >
+                        </p:commandButton>
+
+                    </p:column>
+
+
+                </p:dataTable>
+
+
+                <!--Tabela do Carrinho-->       
+                
+                
+                
+                <br/><br/><br/><br/>
+
+                <p:outputLabel>Carrinho de compras</p:outputLabel>
+                <p:separator />
+
+                <p:dataTable style="font-size: 14px;" emptyMessage="Nenhum Registro Cadastrado" 
+                             value="#{irisvendasMB.itens}"
+                             var="item" id="tbItens">
+
+                    <p:column headerText="Id">
+                        <h:outputText value="#{item.id}" style="font-size: 12px;" />
+                    </p:column>
+
+                    <p:column headerText="Produto">
+                        <h:outputText value="#{item.irisProduto.descricao}" style="font-size: 12px;" />
+                    </p:column>
+                    <p:column headerText="Valor Item" >
+                        <h:outputText value="#{item.valor_parcial}" style="font-size: 12px;" />
+                    </p:column>
+                    <p:column headerText="Quantidade" >
+                        <h:outputText value="#{item.qtd}" style="font-size: 12px;" />
+                    </p:column>
+
+                    <p:column headerText="Fornecedor">
+                        <h:outputText value="#{item.irisProduto.irisfornec.descricao}" style="font-size: 12px;" />
+                    </p:column>
+
+
+                    <p:column headerText="Excluir" >
+
+                        <p:commandButton icon="ui-icon-close" 
+                                         actionListener="#{irisvendasMB.remover(item)}"
+                                         update=":tudo"
+                                         >
+                        </p:commandButton>
+
+                    </p:column>
+
+                </p:dataTable> 
+
+                <p:separator/>
+                <br/>
+                <h:panelGrid columns="1">
+                    <h:outputText id="txtVenValorTotal" value="Valor Toral.: #{irisvendasMB.vendaCadastro.valortotal}"/>
+                    <br/>
+                    <p:commandButton value="Finalizar Venda"  
+                                     actionListener="#{irisvendasMB.carregarDadosVenda()}"
+                                     oncomplete="PF('dlgFinalizarVenda').show();"
+                                     update=":fVend"
+                                     style="height:30px;background-color: whitesmoke;font-size: 13px;"/> <!--usei oncomplete prq preciso q o action seja utilizado antes-->
+                </h:panelGrid>
+
+                
+                
+                <!--Tabela de vendas-->
+                
+                
+                
+                <p:separator/>
+                <br/>
+                <p:outputLabel>Tabela de Vendas</p:outputLabel>
+                <p:separator />
+
+                <p:dataTable style="font-size: 14px;" emptyMessage="Nenhum Registro Cadastrado" 
+                             value="#{irisvendasMB.listarVendas}"
+                             var="vendas">
+
+                    <p:column headerText="Id">
+                        <h:outputText value="#{vendas.id}" style="font-size: 12px;" />
+                    </p:column>
+
+                    <p:column headerText="Vendedor">
+                        <h:outputText value="#{vendas.func.nome}" style="font-size: 12px;" />
+                    </p:column>
+                    <p:column headerText="Valor Item" >
+                        <h:outputText value="#{vendas.valortotal}" style="font-size: 12px;" />
+                    </p:column>
+                    <p:column headerText="Data" >
+                        <h:outputText value="#{vendas.data}" style="font-size: 12px;">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_paulo"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Hora">
+                        <h:outputText value="#{vendas.hora}" style="font-size: 12px;" >
+                        <f:convertDateTime pattern="HH:mm" timeZone="America/Sao_paulo"/>
+                        </h:outputText>
+                    </p:column>
+
+                </p:dataTable> 
+
+
+
+
+            </h:form>
+
+            <!--Dialog Finalizar Vendas-->
+            
+            
+            
+            
+            <p:dialog widgetVar="dlgFinalizarVenda" closable="true"  
+                      draggable="true" modal="true" id="dial"
+                      resizable="false" header="Finalizar Venda" appendTo="@(body)"><!--appendTo libera o modal para fecharmos ele -->
+
+                <!--salvar itens da venda-->
+                
+                
+                
+                
+                <h:form  id="fVend">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Horário.....:" />
+                        <h:outputText value="#{irisvendasMB.vendaCadastro.hora}">
+                            <f:convertDateTime pattern="HH:mm" timeZone="America/Sao_paulo"/>
+                        </h:outputText>
+
+                        <h:outputText value="Id.....:" />
+                        <h:outputText value="#{irisvendasMB.vendaCadastro.id}"/>
+
+
+                        <h:outputText value="Data da venda.....:" />
+                        <h:outputText value="#{irisvendasMB.vendaCadastro.data}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_paulo"/>
+                        </h:outputText>
+
+                        <h:outputText value="Funcionário.....:" />
+                        <p:selectOneMenu value="#{irisvendasMB.vendaCadastro.func.id}" style="width:150px;">
+                            <f:selectItem itemLabel="" itemValue="" />
+                            <f:selectItems value="#{irisvendasMB.irisfuncionario}" var="c" itemLabel="#{c.nome}" itemValue="#{c.id}"  />
+                            <p:ajax process="@this" />
+                        </p:selectOneMenu>
+
+
+                        <h:outputText value="Valor Total........:" />
+                        <h:outputText value="#{irisvendasMB.vendaCadastro.valortotal}" />
+
+                        <br/>
+
+                        <h:panelGrid columns="2">
+                            <p:commandButton value="Finalizar"  actionListener="#{irisvendasMB.salvar()}"
+                                             style="height:30px;background-color: whitesmoke;font-size: 13px;"
+                                             update=":tudo" onclick="PF('dlgFinalizarVenda').hide();"/>
+
+                            <p:commandButton value="Voltar"  onclick="PF('dlgFinalizarVenda').hide();" 
+                                             style="height:30px;background-color: whitesmoke;font-size: 13px;"/>
+                        </h:panelGrid>
+
+                    </h:panelGrid>
+
+                </h:form>
+
+
+            </p:dialog>
+
+
+        </h:body>
+
+    </ui:define>
+
+</ui:composition>                     

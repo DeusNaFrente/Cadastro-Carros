@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml"
+                >
+
+
+
+
+    <ui:define name="metadata">
+        <f:metadata>
+
+
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="conteudo">
+
+
+        <h:head>
+
+            <style>
+                fieldset{
+                    width: 1480px;
+                    height: 580px;
+                    border-width: 2px;
+                    border-color: aliceblue;
+                    border-radius: 10px 20px;
+                }
+            </style>   
+
+
+
+        </h:head> 
+        <h:body>
+
+            <h:panelGroup id="tudo">
+
+
+                <fieldset>
+
+                    <legend>Ordenando vetores</legend>
+                    <h:form>             
+
+
+
+                        <p:separator />
+
+                        <p>Organizando o Vetor [5, 3, 2, 4, 7, 1, 0, 6]:</p>
+                        
+                       
+                        <p><p:inputText value="#{bbsMB.bbsort.vorganizado}"  size="20"/></p>
+
+                        <br/>
+                        <p:commandButton icon="ui-icon-plus" value="Organizar" actionListener="#{bbsMB.organizaVetor()}" 
+                                         update=":tudo" style="height:30px;background-color: whitesmoke;font-size: 13px;" />
+
+                    </h:form>
+                </fieldset>
+
+
+
+            </h:panelGroup>
+        </h:body>
+    </ui:define>
+
+</ui:composition>         

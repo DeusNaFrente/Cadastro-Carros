@@ -1,0 +1,14 @@
+@CHARSET "ISO-8859-1";            
+
+.ui-Layout-north{
+    z-index: 20 !important;
+    overflow: visible !important;;
+}
+
+.ui-Layout-north .ui-Layout-unit-content {
+    overflow: visible !important;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 100%;
+}
