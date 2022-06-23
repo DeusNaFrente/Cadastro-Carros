@@ -1,4 +1,4 @@
-# projeto Tinnova
+# projeto Cadastro de veículos
 Este projeto foi feito em Java, utilizando Netbeans IDE, Tomcat para o servidor da aplicação. Usei anotações JPA e JSF, compilador Maven e a Persistência com Hibernate.
 Para o banco de dados usei o Mysql.
 Usei também um pouco de JSP/Html/Css. 
